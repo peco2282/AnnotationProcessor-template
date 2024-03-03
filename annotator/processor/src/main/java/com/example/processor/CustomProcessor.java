@@ -6,9 +6,10 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic.Kind;
 import java.util.Set;
 
-@SupportedAnnotationTypes("com.github")
+@SupportedAnnotationTypes("*")
 @SupportedSourceVersion(SourceVersion.RELEASE_18)
 public class CustomProcessor extends AbstractProcessor {
   /**
@@ -20,8 +21,7 @@ public class CustomProcessor extends AbstractProcessor {
   @Override
   public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
     annotations.forEach(element ->
-        System.out.println(element.getSimpleName() + " " + element.getQualifiedName()
-        )
+        processingEnv.getMessager().printMessage(Kind.NOTE,element.getSimpleName() + " " + element.getQualifiedName())
     );
     return true;
   }
